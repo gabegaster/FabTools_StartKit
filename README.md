@@ -10,6 +10,6 @@ Getting started
 * From the command line, run `fab dev vagrant.up provision`. This will
   create a virtual machine with all the necessary packages.
 
-* SSH to the virtual machine with `vagrant ssh $(Your Project Name)`
+* SSH to the virtual machine with `vagrant ssh FabTools_StartKit` # project name from config.ini
 
 * Put in any python or other unix tools you want in REQUIREMENTS or REQUIREMENTS-DEB

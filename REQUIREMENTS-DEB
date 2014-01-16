@@ -1,5 +1,7 @@
 make
 git
 mercurial
+ipython
+tree
 python-scipy
 python-sklearn

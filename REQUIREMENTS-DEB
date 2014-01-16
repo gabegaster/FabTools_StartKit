@@ -1,5 +1,5 @@
 make
 git
-hg
+mercurial
 python-scipy
 python-sklearn

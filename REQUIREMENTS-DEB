@@ -1,0 +1,5 @@
+make
+git
+hg
+python-scipy
+python-sklearn

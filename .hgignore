@@ -34,3 +34,7 @@ ww
 xx
 yy
 zz
+
+# ignore the server configuration file, that is rendered from
+# fabric/templates/server_config.ini
+server_config.ini

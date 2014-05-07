@@ -67,6 +67,23 @@ def packages():
 
 @task
 @decorators.needs_environment
+def setup_shell_environment():
+    """setup the shell environment on the remote machine"""
+    with vagrant_settings(env.host_string):
+
+        # change into the /vagrant directory by default
+        template = os.path.join(
+            utils.fabfile_templates_root(),
+            '.bash_profile',
+        )
+        fabtools.require.files.file(
+            path="/home/vagrant/.bash_profile",
+            contents="cd /vagrant",
+        )
+
+
+@task
+@decorators.needs_environment
 def setup_analysis():
     """prepare analysis environment"""
     with vagrant_settings(env.host_string):
@@ -109,6 +126,7 @@ def default(do_rsync=True):
     # packages have necessary dependencies
     packages()
 
-    # set up anything that needs to be done prior to running the
-    # analysis via make
+    # set up anything else that should be done on the virtual machine
+    # to get it into the same state for everyone
+    setup_shell_environment()
     setup_analysis()

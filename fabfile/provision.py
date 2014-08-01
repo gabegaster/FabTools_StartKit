@@ -9,7 +9,7 @@ from distutils.util import strtobool
 
 # 3rd party
 import fabric
-from fabric.api import env, task, local, run, settings, cd, sudo, lcd
+from fabric.api import env, task, local, run, settings, cd, sudo, lcd, run, hide
 import fabtools
 from fabtools.vagrant import vagrant_settings
 
@@ -106,6 +106,28 @@ def setup_analysis():
         data_dir = "/vagrant/data"
         fabtools.require.files.directory(data_dir)
 
+@task
+@decorators.needs_environment
+def set_timezone(timezone):
+    with vagrant_settings(env.host_string):
+        sudo('echo "%s" > /etc/timezone' % timezone)
+        sudo('dpkg-reconfigure --frontend noninteractive tzdata')
+        fabtools.require.service.restarted('cron')
+
+
+@task
+@decorators.needs_environment
+def require_timezone(timezone):
+    with vagrant_settings(env.host_string):
+        result = run('grep -q "^%s$" /etc/timezone' % timezone)
+        ret_code = result.return_code
+        if ret_code == 0:
+            return
+        elif ret_code == 1:
+            set_timezone(timezone)
+        else:
+            raise SystemExit()
+
 
 @task(default=True)
 @decorators.needs_environment
@@ -126,7 +148,9 @@ def default(do_rsync=True):
     # packages have necessary dependencies
     packages()
 
-    utils.require_timezone('America/Chicago')
+    # set time zone
+    require_timezone('America/Chicago')
+
     # set up anything else that should be done on the virtual machine
     # to get it into the same state for everyone
     setup_shell_environment()

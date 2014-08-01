@@ -9,7 +9,8 @@ from distutils.util import strtobool
 
 # 3rd party
 import fabric
-from fabric.api import env, task, local, run, settings, cd, sudo, lcd, run, hide
+from fabric.context_managers import quiet
+from fabric.api import env, task, local, run, settings, cd, sudo, lcd
 import fabtools
 from fabtools.vagrant import vagrant_settings
 
@@ -119,8 +120,10 @@ def set_timezone(timezone):
 @decorators.needs_environment
 def require_timezone(timezone):
     with vagrant_settings(env.host_string):
-        result = run('grep -q "^%s$" /etc/timezone' % timezone)
-        ret_code = result.return_code
+        ret_code = 2
+        with settings(warn_only=True):
+            result = run('grep -q "^%s$" /etc/timezone' % timezone)
+            ret_code = result.return_code
         if ret_code == 0:
             return
         elif ret_code == 1:

@@ -13,5 +13,10 @@ def dev():
     env.provider = "virtualbox"
     utils.set_hosts_from_config()
     
-    # TODO read the config.ini file here
-    execute(vagrant, 'fab-tools-start-kit')
+    # TODO do we want to start all the hosts?
+    # or just the first one?
+    if env.hosts:
+        execute(vagrant, env.hosts[0])
+    else:
+        msg = "No hosts defined in the configuration file"
+        raise FabricException(msg)

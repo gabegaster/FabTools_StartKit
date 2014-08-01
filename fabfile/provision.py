@@ -126,6 +126,7 @@ def default(do_rsync=True):
     # packages have necessary dependencies
     packages()
 
+    utils.require_timezone('America/Chicago')
     # set up anything else that should be done on the virtual machine
     # to get it into the same state for everyone
     setup_shell_environment()

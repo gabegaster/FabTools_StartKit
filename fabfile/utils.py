@@ -31,3 +31,20 @@ def get_config_parser():
 def set_hosts_from_config():
     parser = get_config_parser()
     env.hosts = parser.get('servers', env.provider).split(",")
+
+def set_timezone(timezone):
+    run_as_root('echo "%s" > /etc/timezone' % timezone)
+    run_as_root('dpkg-reconfigure --frontend noninteractive tzdata')
+    require.service.restarted('cron')
+
+def require_timezone(timezone):
+    with settings(hide('commands'), warn_only=True):
+        result = run('grep -q "^%s$" /etc/timezone' % timezone)
+        ret_code = result.return_code
+    if ret_code == 0:
+        return
+    elif ret_code == 1:
+        set_timezone(timezone)
+    else:
+        raise SystemExit()
+

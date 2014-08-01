@@ -34,3 +34,4 @@ def get_config_parser():
 def set_hosts_from_config():
     parser = get_config_parser()
     env.hosts = parser.get('servers', env.provider).split(",")
+    print env.hosts

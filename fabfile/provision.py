@@ -156,7 +156,7 @@ def default(do_rsync=True):
     packages()
 
     # set time zone
-    require_timezone('America/Chicago')
+    require_timezone()
 
     # set up anything else that should be done on the virtual machine
     # to get it into the same state for everyone

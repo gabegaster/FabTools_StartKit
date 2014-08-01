@@ -23,6 +23,9 @@ def project_root():
 def remote_project_root():
     return "/vagrant"
 
+def remote_templates_root():
+    return os.path.join(remote_project_root(), "fabfile/templates")
+
 def get_config_parser():
     parser = ConfigParser.RawConfigParser()
     parser.read(os.path.join(project_root(), "config.ini"))
@@ -31,5 +34,3 @@ def get_config_parser():
 def set_hosts_from_config():
     parser = get_config_parser()
     env.hosts = parser.get('servers', env.provider).split(",")
-
-

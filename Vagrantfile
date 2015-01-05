@@ -21,8 +21,8 @@ Vagrant.configure("2") do |config|
   virtualbox_server_name = ini['servers']['virtualbox']
   config.vm.provider :virtualbox do |vb, override_config|
     vb.gui = false
-    override_config.vm.box = "precise32"
-    override_config.vm.box_url = "http://files.vagrantup.com/precise32.box"
+    override_config.vm.box = "trusty64"
+    override_config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
     # override_config.vm.network :forwarded_port, guest: 8000, host: 8000
     # override_config.vm.network :forwarded_port, guest: 80, host: 8080
 

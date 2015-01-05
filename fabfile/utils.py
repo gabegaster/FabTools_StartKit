@@ -26,6 +26,12 @@ def remote_project_root():
 def remote_templates_root():
     return os.path.join(remote_project_root(), "fabfile/templates")
 
+def requirements_root():
+    return os.path.join(project_root(), "requirements")
+
+def remote_requirements_root():
+    return os.path.join(remote_project_root(), "requirements")
+
 def get_config_parser():
     parser = ConfigParser.RawConfigParser()
     parser.read(os.path.join(project_root(), "config.ini"))

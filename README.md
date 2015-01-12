@@ -8,8 +8,11 @@ Getting started
 * Change config.ini to have your project name (currently called
   fab-tools-start-kit).  Only use letters, numbers, hyphens
 
-* From the command line, run `fab dev vagrant.up provision`. This will
-  create a virtual machine with all the necessary packages.
+* From the command line, run `vagrant up`. This will
+  create and power up a virtual machine
+  
+* Run `fab dev provision`. This will install all the necessary packages
+  on the virtual machine.
 
 * SSH to the virtual machine with `vagrant ssh FabTools_StartKit` #
   project name from config.ini

@@ -33,11 +33,12 @@ def apt_get_update(max_age=86400*7):
         )
         raise Exception(msg)
 
+
 @task
 @decorators.needs_environment
 def python_packages():
     """install python packages"""
-    filename = os.path.join(utils.remote_project_root(), "REQUIREMENTS")
+    filename = os.path.join(utils.remote_requirements_root(), "python")
     fabtools.require.python.requirements(filename, use_sudo=True)
 
 
@@ -47,7 +48,7 @@ def debian_packages():
     """install debian packages"""
     
     # get the list of packages
-    filename = os.path.join(utils.project_root(), "REQUIREMENTS-DEB")
+    filename = os.path.join(utils.requirements_root(), "debian")
     with open(filename, 'r') as stream:
         packages = stream.read().strip().splitlines()
 
